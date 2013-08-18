@@ -36,8 +36,6 @@ class MKleine_Helpcustomers_Model_Observer extends Mage_Core_Model_Abstract
                 $model->delete();
             }
         }
-
-        self::send_mail();
     }
 
     public static function send_mail()
@@ -66,6 +64,7 @@ class MKleine_Helpcustomers_Model_Observer extends Mage_Core_Model_Abstract
                     $mailer->addEmailInfo($emailInfo);
 
                     // Set all required params and send emails
+                    $mailer->setSender(Mage::getStoreConfig(Mage_Admin_Model_User::XML_PATH_FORGOT_EMAIL_IDENTITY));
                     $mailer->setStoreId($failItem->getStoreId());
                     $mailer->setTemplateId($mailTemplateId);
 
