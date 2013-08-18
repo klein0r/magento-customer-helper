@@ -1,0 +1,15 @@
+{
+    "name": "mkleine/magento-customer-helper",
+    "license": "OSL-3.0",
+    "type": "magento-module",
+    "description": "Sends an email after a given time range to customers which failed to login",
+    "homepage": "http://mkleine.de/projekte-und-referenzen/magento/",
+    "require": {
+        "magento-hackathon/magento-composer-installer": "*"
+    },
+    "authors": [
+        {
+            "name": "Matthias Kleine"
+        }
+    ]
+}
