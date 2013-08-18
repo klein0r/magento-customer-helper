@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <MKleine_Helpcustomers>
+            <active>true</active>
+            <codePool>community</codePool>
+        </MKleine_Helpcustomers>
+    </modules>
+</config>
