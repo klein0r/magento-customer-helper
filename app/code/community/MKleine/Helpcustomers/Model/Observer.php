@@ -20,6 +20,10 @@
  */
 class MKleine_Helpcustomers_Model_Observer extends Mage_Core_Model_Abstract
 {
+    /**
+     * Will be called when a customer is authenticated successfully
+     * @param $observer
+     */
     public function customer_customer_authenticated($observer)
     {
         /** @var $customer Mage_Customer_Model_Customer */
@@ -36,10 +40,14 @@ class MKleine_Helpcustomers_Model_Observer extends Mage_Core_Model_Abstract
         }
     }
 
+    /**
+     * Will be called by the cron job every 10 Minutes and sends a mail
+     * to all customers which failed to login
+     */
     public static function send_mail()
     {
         /** @var $mailModel MKleine_Helpcustomers_Model_Mailer */
-        $mailModel = Mage::getModel('mk_helpcustomers/mailer');
+        $mailModel = Mage::getSingleton('mk_helpcustomers/mailer');
         $mailModel->sendMails();
     }
 }

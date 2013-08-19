@@ -18,28 +18,15 @@
  * @copyright   Copyright (c) 2013 Matthias Kleine (http://mkleine.de)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class MKleine_Helpcustomers_Test_Model_Mailer extends EcomDev_PHPUnit_Test_Case
+class MKleine_Helpcustomers_Test_Model_Faillog extends EcomDev_PHPUnit_Test_Case
 {
-    protected function setUp()
+
+    public function testInsert()
     {
-        parent::setUp();
+        /** @var $model MKleine_Helpcustomers_Model_Faillog */
+        $model = Mage::getModel('mk_helpcustomers/faillog');
 
 
     }
 
-    public function testSendMails()
-    {
-        /** @var $mailModel MKleine_Helpcustomers_Model_Mailer */
-        $mailModel = Mage::getSingleton('mk_helpcustomers/mailer');
-        $mailModel->sendMails();
-
-        //$this->assertTrue(true);
-    }
-
-    protected function tearDown()
-    {
-        parent::tearDown();
-
-
-    }
 }
