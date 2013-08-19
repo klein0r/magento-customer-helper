@@ -18,25 +18,9 @@
  * @copyright   Copyright (c) 2013 Matthias Kleine (http://mkleine.de)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class MKleine_Helpcustomers_Model_Observer extends Mage_Core_Model_Abstract
+class MKleine_Helpcustomers_Test_Model_Mailer extends EcomDev_PHPUnit_Test_Case
 {
-    public function customer_customer_authenticated($observer)
-    {
-        /** @var $customer Mage_Customer_Model_Customer */
-        $customer = $observer->getModel();
-
-        if ($customerId = $customer->getId()) {
-            /** @var $model MKleine_Helpcustomers_Model_Faillog */
-            $model = Mage::getModel('mk_helpcustomers/faillog');
-            $model->loadFaillogByCustomerId($customerId);
-
-            if ($model->getId()) {
-                $model->delete();
-            }
-        }
-    }
-
-    public static function send_mail()
+    public function testSendMails()
     {
         /** @var $mailModel MKleine_Helpcustomers_Model_Mailer */
         $mailModel = Mage::getModel('mk_helpcustomers/mailer');

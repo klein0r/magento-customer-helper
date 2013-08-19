@@ -92,4 +92,19 @@
             </mk_helpcustomers_send_mail>
         </jobs>
     </crontab>
+    <default>
+        <customer>
+            <helpcustomers>
+                <active>1</active>
+                <logon_fail_email_template></logon_fail_email_template>
+            </helpcustomers>
+        </customer>
+    </default>
+    <phpunit>
+        <suite>
+            <modules>
+                <MKleine_Helpcustomers />
+            </modules>
+        </suite>
+    </phpunit>
 </config>
