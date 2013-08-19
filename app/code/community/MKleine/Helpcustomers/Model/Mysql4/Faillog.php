@@ -18,30 +18,11 @@
  * @copyright   Copyright (c) 2013 Matthias Kleine (http://mkleine.de)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class MKleine_Helpcustomers_Model_Maillog extends Mage_Customer_Model_Customer
+class MKleine_Helpcustomers_Model_Mysql4_Faillog extends Mage_Core_Model_Mysql4_Abstract
 {
     public function _construct()
     {
-        parent::_construct();
-        $this->_init('mk_helpcustomers/maillog');
-    }
-
-    /**
-     * Loads a maillog by a specific variable
-     * @param $customerId Id of customer
-     * @return $this MKleine_Helpcustomers_Model_Maillog
-     */
-    public function loadMaillogByCustomerId($customerId)
-    {
-        $this->load($customerId, 'customer_id');
-        return $this;
-    }
-
-    public function delete() {
-        Mage::register('isSecureArea', true);
-        $ret = parent::delete();
-        Mage::unregister('isSecureArea');
-
-        return $ret;
+        // Note that the maillog_id refers to the key field in your database table.
+        $this->_init('mk_helpcustomers/faillog', 'faillog_id');
     }
 }

@@ -19,9 +19,9 @@
             <mk_helpcustomers_mysql4>
                 <class>MKleine_Helpcustomers_Model_Mysql4</class>
                 <entities>
-                    <maillog>
-                        <table>customerhelper_maillog</table>
-                    </maillog>
+                    <faillog>
+                        <table>helpcustomers_faillog</table>
+                    </faillog>
                 </entities>
             </mk_helpcustomers_mysql4>
             <customer>

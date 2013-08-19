@@ -18,11 +18,11 @@
  * @copyright   Copyright (c) 2013 Matthias Kleine (http://mkleine.de)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class MKleine_Helpcustomers_Model_Mysql4_Maillog_Collection extends Mage_Core_Model_Mysql4_Collection_Abstract
+class MKleine_Helpcustomers_Model_Mysql4_Faillog_Collection extends Mage_Core_Model_Mysql4_Collection_Abstract
 {
     public function _construct()
     {
         parent::_construct();
-        $this->_init('mk_helpcustomers/maillog');
+        $this->_init('mk_helpcustomers/faillog');
     }
 }

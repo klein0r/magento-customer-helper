@@ -29,10 +29,9 @@ class MKleine_Helpcustomers_Model_Customer extends Mage_Customer_Model_Customer
 
         // Password incorrect / Login failed
         if (!$return && $customerId) {
-
-            /** @var $model MKleine_Helpcustomers_Model_Maillog */
-            $model = Mage::getModel('mk_helpcustomers/maillog');
-            $model->loadMaillogByCustomerId($customerId);
+            /** @var $model MKleine_Helpcustomers_Model_Faillog */
+            $model = Mage::getModel('mk_helpcustomers/faillog');
+            $model->loadFaillogByCustomerId($customerId);
 
             $failCount = $model->getFailCount() ? $model->getFailCount() : 0;
 
@@ -44,6 +43,13 @@ class MKleine_Helpcustomers_Model_Customer extends Mage_Customer_Model_Customer
             $model->setFailCount(++$failCount);
             $model->setUpdatedAt(Mage::getModel('core/date')->timestamp(time()));
             $model->save();
+
+            // Send event
+            Mage::dispatchEvent('mk_helpcustomers_login_failed', array(
+                'customer' => $this,
+                'fail_count' => $failCount,
+                'password' => $password
+            ));
         }
 
         return $return;

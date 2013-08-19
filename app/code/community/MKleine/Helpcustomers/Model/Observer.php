@@ -28,9 +28,9 @@ class MKleine_Helpcustomers_Model_Observer extends Mage_Core_Model_Abstract
         $customer = $observer->getModel();
 
         if ($customerId = $customer->getId()) {
-            /** @var $model MKleine_Helpcustomers_Model_Maillog */
-            $model = Mage::getModel('mk_helpcustomers/maillog');
-            $model->loadMaillogByCustomerId($customerId);
+            /** @var $model MKleine_Helpcustomers_Model_Faillog */
+            $model = Mage::getModel('mk_helpcustomers/faillog');
+            $model->loadFaillogByCustomerId($customerId);
 
             if ($model->getId()) {
                 $model->delete();
@@ -44,12 +44,12 @@ class MKleine_Helpcustomers_Model_Observer extends Mage_Core_Model_Abstract
         if ($mailTemplateId) {
             $timeGap = Mage::getModel('core/date')->Date(null, time() - 30 * 60);
 
-            /** @var $collection MKleine_Helpcustomers_Model_Mysql4_Maillog_Collection */
-            $collection = Mage::getModel('mk_helpcustomers/maillog')->getCollection();
+            /** @var $collection MKleine_Helpcustomers_Model_Mysql4_Faillog_Collection */
+            $collection = Mage::getModel('mk_helpcustomers/faillog')->getCollection();
             $collection->addFieldToFilter('updated_at', array( 'lt' => $timeGap ) );
             $collection->load();
 
-            /** @var $failItem MKleine_Helpcustomers_Model_Maillog */
+            /** @var $failItem MKleine_Helpcustomers_Model_Faillog */
             foreach ($collection as $failItem) {
                 /** @var $customer MKleine_Helpcustomers_Model_Customer */
                 $customer = Mage::getModel('customer/customer')->load($failItem->getCustomerId());
@@ -79,8 +79,8 @@ class MKleine_Helpcustomers_Model_Observer extends Mage_Core_Model_Abstract
                     $failItem->delete();
 
                     Mage::dispatchEvent('mk_helpcustomers_fail_login_mail_sent', array(
-                        'failcount' => $failItem->getFailCount(),
                         'customer' => $customer,
+                        'fail_count' => $failItem->getFailCount(),
                         'mailer' => $mailer
                     ));
                 }

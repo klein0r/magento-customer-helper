@@ -26,14 +26,14 @@ $installer->startSetup();
 
 $installer->run("
 
-    CREATE TABLE IF NOT EXISTS {$this->getTable('customerhelper_maillog')} (
-      `maillog_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+    CREATE TABLE IF NOT EXISTS {$this->getTable('helpcustomers_faillog')} (
+      `faillog_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
       `store_id` smallint(5) unsigned NOT NULL COMMENT 'Store Id',
       `customer_id` int(10) unsigned NOT NULL,
       `fail_count` int(3) unsigned NOT NULL,
       `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Created At',
       `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Updated At',
-      PRIMARY KEY (`maillog_id`)
+      PRIMARY KEY (`faillog_id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ");
@@ -42,9 +42,9 @@ $installer->run("
 $connection = $installer->getConnection();
 
 $connection->addIndex(
-    $this->getTable('customerhelper_maillog'),
+    $this->getTable('helpcustomers_faillog'),
     $installer->getIdxName(
-        $this->getTable('customerhelper_maillog'),
+        $this->getTable('helpcustomers_faillog'),
         array('customer_id'),
         Varien_Db_Adapter_Interface::INDEX_TYPE_UNIQUE
     ),
