@@ -5,11 +5,26 @@
     "description": "Sends an email after a given time range to customers which failed to login",
     "homepage": "http://mkleine.de/projekte-und-referenzen/magento/",
     "require": {
+        "php": ">=5.3.0",
         "magento-hackathon/magento-composer-installer": "*"
     },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/klein0r/magento-customer-helper.git"
+        }
+    ],
+    "keywords": [
+        "magento",
+        "extension",
+        "module"
+    ],
     "authors": [
         {
-            "name": "Matthias Kleine"
+            "name": "Matthias Kleine",
+            "email": "development@mkleine.de",
+            "homepage": "http://mkleine.de",
+            "role": "Developer"
         }
     ]
 }
