@@ -84,7 +84,7 @@
         <jobs>
             <mk_helpcustomers_send_mail>
                 <schedule>
-                    <cron_expr>*/30 * * * *</cron_expr>
+                    <cron_expr>*/10 * * * *</cron_expr>
                 </schedule>
                 <run>
                     <model>mk_helpcustomers/observer::send_mail</model>

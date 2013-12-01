@@ -25,7 +25,7 @@ class MKleine_Helpcustomers_Model_Mailer extends Mage_Core_Model_Abstract
 
     public function sendMails()
     {
-        $timeGap = Mage::getModel('core/date')->Date(null, time() - 30 * 60);
+        $timeGap = Mage::getModel('core/date')->Date(null, time() - 10 * 60);
 
         /** @var $collection MKleine_Helpcustomers_Model_Mysql4_Faillog_Collection */
         $collection = Mage::getModel('mk_helpcustomers/faillog')->getCollection();
@@ -37,10 +37,12 @@ class MKleine_Helpcustomers_Model_Mailer extends Mage_Core_Model_Abstract
             $mailTemplateId = Mage::getStoreConfig(self::XML_PATH_LOGON_FAIL_EMAIL_TEMPLATE, $failItem->getStoreId());
 
             // Check if module is active for given store
-            if ($mailTemplateId && Mage::getStoreConfig(Mage_Admin_Model_User::XML_PATH_EXTENSION_ACTIVE, $failItem->getStoreId())) {
+            if ($mailTemplateId && Mage::getStoreConfig(self::XML_PATH_EXTENSION_ACTIVE, $failItem->getStoreId())) {
 
                 /** @var $customer MKleine_Helpcustomers_Model_Customer */
-                $customer = Mage::getModel('customer/customer')->load($failItem->getCustomerId());
+                $customer = Mage::getModel('customer/customer')
+                    ->setWebsiteId(Mage::app()->getStore($failItem->getStoreId())->getWebsiteId())
+                    ->load($failItem->getCustomerId());
 
                 if ($customer->getId()) {
                     /** @var $mailer Mage_Core_Model_Email_Template_Mailer */
