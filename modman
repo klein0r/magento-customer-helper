@@ -1,2 +1,6 @@
 app/code/community/MKleine/Helpcustomers app/code/community/MKleine/Helpcustomers
 app/etc/modules/MKleine_Helpcustomers.xml app/etc/modules/MKleine_Helpcustomers.xml
+app/locale/de_DE/MKleine_Helpcustomers.csv app/locale/de_DE/MKleine_Helpcustomers.csv
+app/locale/de_DE/template/email/logon_fail_template.html app/locale/de_DE/template/email/logon_fail_template.html
+app/locale/en_US/MKleine_Helpcustomers.csv app/locale/en_US/MKleine_Helpcustomers.csv
+app/locale/en_US/template/email/logon_fail_template.html app/locale/en_US/template/email/logon_fail_template.html

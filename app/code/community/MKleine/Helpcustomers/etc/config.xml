@@ -2,7 +2,7 @@
 <config>
     <modules>
         <MKleine_Helpcustomers>
-            <version>0.0.1</version>
+            <version>1.0.0</version>
         </MKleine_Helpcustomers>
     </modules>
     <global>
@@ -55,6 +55,15 @@
                 </connection>
             </helpcustomers_read>
         </resources>
+        <template>
+            <email>
+                <customer_helpcustomers_logon_fail_email_template translate="label" module="mk_helpcustomers">
+                    <label>Logon fail template</label>
+                    <file>logon_fail_template.html</file>
+                    <type>html</type>
+                </customer_helpcustomers_logon_fail_email_template>
+            </email>
+        </template>
     </global>
     <frontend>
         <events>
@@ -72,11 +81,11 @@
     <adminhtml>
         <translate>
             <modules>
-                <MKleine_Helpcustomers>
+                <mk_helpcustomers>
                     <files>
                         <default>MKleine_Helpcustomers.csv</default>
                     </files>
-                </MKleine_Helpcustomers>
+                </mk_helpcustomers>
             </modules>
         </translate>
     </adminhtml>
@@ -96,7 +105,7 @@
         <customer>
             <helpcustomers>
                 <active>1</active>
-                <logon_fail_email_template></logon_fail_email_template>
+                <logon_fail_email_template>customer_helpcustomers_logon_fail_email_template</logon_fail_email_template>
             </helpcustomers>
         </customer>
     </default>
