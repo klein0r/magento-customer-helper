@@ -18,13 +18,18 @@
  * @copyright   Copyright (c) 2013 Matthias Kleine (http://mkleine.de)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
+
+/**
+ * Class MKleine_Helpcustomers_Model_Observer
+ *
+ */
 class MKleine_Helpcustomers_Model_Observer extends Mage_Core_Model_Abstract
 {
     /**
      * Will be called when a customer is authenticated successfully
      * @param $observer
      */
-    public function customer_customer_authenticated($observer)
+    public function customer_authenticated($observer)
     {
         /** @var $customer Mage_Customer_Model_Customer */
         $customer = $observer->getModel();
@@ -41,6 +46,23 @@ class MKleine_Helpcustomers_Model_Observer extends Mage_Core_Model_Abstract
     }
 
     /**
+     * Will be called when an inventory item has been changed by an administrator
+     * @param $observer
+     */
+    public function cataloginventory_stock_item_save_after($observer)
+    {
+        /** @var $item Mage_CatalogInventory_Model_Stock_Item */
+        $item = $observer->getItem();
+        $product = $item->getProduct();
+
+        if ($item->getQty() > 0 && $product->getId() && $item->getIsInStock()) {
+            /** @var $mailer MKleine_Helpcustomers_Model_Mailer */
+            $mailer = Mage::getModel('mkleine_helpcustomers/mailer');
+            $mailer->sendStocknotificationMails($product->getId(), $item->getQty());
+        }
+    }
+
+    /**
      * Will be called by the cron job every 10 Minutes and sends a mail
      * to all customers which failed to login
      */
@@ -48,6 +70,6 @@ class MKleine_Helpcustomers_Model_Observer extends Mage_Core_Model_Abstract
     {
         /** @var $mailModel MKleine_Helpcustomers_Model_Mailer */
         $mailModel = Mage::getSingleton('mk_helpcustomers/mailer');
-        $mailModel->sendMails();
+        $mailModel->sendFaillogMails();
     }
 }

@@ -18,8 +18,17 @@
  * @copyright   Copyright (c) 2013 Matthias Kleine (http://mkleine.de)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
+
+/**
+ * Class MKleine_Helpcustomers_Model_Customer
+ *
+ * @method setWebsiteId
+ * @method getEmail
+ */
 class MKleine_Helpcustomers_Model_Customer extends Mage_Customer_Model_Customer
 {
+    const XML_PATH_LOGON_FAIL_ACTIVE = 'customer/helpcustomers/logon_fail_active';
+
     public function validatePassword($password)
     {
         $return = parent::validatePassword($password);
@@ -29,20 +38,24 @@ class MKleine_Helpcustomers_Model_Customer extends Mage_Customer_Model_Customer
 
         // Password incorrect / Login failed
         if (!$return && $customerId) {
-            /** @var $model MKleine_Helpcustomers_Model_Faillog */
-            $model = Mage::getModel('mk_helpcustomers/faillog');
-            $model->loadFaillogByCustomerId($customerId);
+            $failCount = 1; // Initial value
 
-            $failCount = $model->getFailCount() ? $model->getFailCount() : 0;
+            if (Mage::getStoreConfig(self::XML_PATH_LOGON_FAIL_ACTIVE)) {
+                /** @var $model MKleine_Helpcustomers_Model_Faillog */
+                $model = Mage::getModel('mk_helpcustomers/faillog');
+                $model->loadFaillogByCustomerId($customerId);
 
-            if (!$model->getId()) {
-                $model->setCustomerId($customerId);
+                $failCount = $model->getFailCount() ? $model->getFailCount() : 0;
+
+                if (!$model->getId()) {
+                    $model->setCustomerId($customerId);
+                }
+
+                $model->setStoreId($storeId);
+                $model->setFailCount(++$failCount);
+                $model->setUpdatedAt(Mage::getModel('core/date')->timestamp(time()));
+                $model->save();
             }
-
-            $model->setStoreId($storeId);
-            $model->setFailCount(++$failCount);
-            $model->setUpdatedAt(Mage::getModel('core/date')->timestamp(time()));
-            $model->save();
 
             // Send event
             Mage::dispatchEvent('mk_helpcustomers_login_failed', array(

@@ -1,0 +1,11 @@
+<?php /** @var $this MKleine_Helpcustomers_Block_Stocknotification_Remove */ ?>
+
+    <h1><?php echo $this->__('Product notification'); ?></h1>
+
+<?php if($product = $this->getProduct()) : ?>
+
+    <p><strong><?php echo $this->__('Successfully unregistered'); ?>:</strong> <?php echo $product->getName(); ?> (<?php echo $product->getSku(); ?>)</p>
+
+    <a href="<?php echo $product->getProductUrl(); ?>"><?php echo $this->__('Back to product'); ?></a>
+
+<?php endif; ?>

@@ -18,6 +18,19 @@
  * @copyright   Copyright (c) 2013 Matthias Kleine (http://mkleine.de)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
+
+/**
+ * Class MKleine_Helpcustomers_Model_Faillog
+ *
+ * @method setStoreId
+ * @method getStoreId
+ * @method setCustomerId
+ * @method getCustomerId
+ * @method setFailCount
+ * @method getFailCount
+ * @method setUpdatedAt
+ * @method getUpdatedAt
+ */
 class MKleine_Helpcustomers_Model_Faillog extends Mage_Customer_Model_Customer
 {
     public function _construct()
@@ -28,7 +41,7 @@ class MKleine_Helpcustomers_Model_Faillog extends Mage_Customer_Model_Customer
 
     /**
      * Loads a faillog by a specific variable
-     * @param $customerId Id of customer
+     * @param $customerId int Id of customer
      * @return $this MKleine_Helpcustomers_Model_Faillog
      */
     public function loadFaillogByCustomerId($customerId)

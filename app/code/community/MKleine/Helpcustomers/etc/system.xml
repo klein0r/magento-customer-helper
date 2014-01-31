@@ -11,16 +11,16 @@
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
                     <fields>
-                        <active translate="label comment">
-                            <label>Extension active</label>
+                        <logon_fail_active translate="label comment">
+                            <label>Logon Fail active</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
-                            <comment>Defines if the extension is active</comment>
+                            <comment>Will send emails to customers when they fail to login</comment>
                             <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                        </active>
+                        </logon_fail_active>
                         <logon_fail_email_template translate="label">
                             <label>Logon Fail Email Template</label>
                             <frontend_type>select</frontend_type>
@@ -30,6 +30,26 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </logon_fail_email_template>
+
+                        <stocknotification_active translate="label comment">
+                            <label>Stocknotification active</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <comment>Defines if the extension is active</comment>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </stocknotification_active>
+                        <stocknotification_email_template translate="label">
+                            <label>Stocknotification Email Template</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </stocknotification_email_template>
                     </fields>
                 </helpcustomers>
             </groups>

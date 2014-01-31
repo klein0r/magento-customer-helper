@@ -18,28 +18,31 @@
  * @copyright   Copyright (c) 2013 Matthias Kleine (http://mkleine.de)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class MKleine_Helpcustomers_Test_Model_Mailer extends EcomDev_PHPUnit_Test_Case
+
+/**
+ * Class MKleine_Helpcustomers_Block_Stocknotification_Link
+ *
+ */
+class MKleine_Helpcustomers_Block_Stocknotification_Link extends Mage_Core_Block_Template
 {
-    protected function setUp()
+    /**
+     * @return Mage_Catalog_Model_Product
+     */
+    public function getProduct()
     {
-        parent::setUp();
-
-
+        return Mage::registry('current_product');
     }
 
-    public function testSendMails()
+    public function isLoggedIn()
     {
-        /** @var $mailModel MKleine_Helpcustomers_Model_Mailer */
-        $mailModel = Mage::getSingleton('mk_helpcustomers/mailer');
-        $mailModel->sendMails();
-
-        //$this->assertTrue(true);
+        return Mage::getSingleton('customer/session')->isLoggedIn();
     }
 
-    protected function tearDown()
+    public function notificationExists()
     {
-        parent::tearDown();
-
-
+        /** @var $notModel MKleine_Helpcustomers_Model_Stocknotification */
+        $notModel = Mage::getModel('mk_helpcustomers/stocknotification');
+        $notModel->prepare($this->getProduct()->getId());
+        return $notModel->getId();
     }
 }

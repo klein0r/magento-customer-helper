@@ -2,7 +2,7 @@
 <config>
     <modules>
         <MKleine_Helpcustomers>
-            <version>1.0.0</version>
+            <version>1.5.0</version>
         </MKleine_Helpcustomers>
     </modules>
     <global>
@@ -22,6 +22,9 @@
                     <faillog>
                         <table>helpcustomers_faillog</table>
                     </faillog>
+                    <stocknotification>
+                        <table>helpcustomers_stocknotification</table>
+                    </stocknotification>
                 </entities>
             </mk_helpcustomers_mysql4>
             <customer>
@@ -58,22 +61,63 @@
         <template>
             <email>
                 <customer_helpcustomers_logon_fail_email_template translate="label" module="mk_helpcustomers">
-                    <label>Logon fail template</label>
-                    <file>logon_fail_template.html</file>
+                    <label>Logon Fail Email Template</label>
+                    <file>logon_failed.html</file>
                     <type>html</type>
                 </customer_helpcustomers_logon_fail_email_template>
+                <customer_helpcustomers_stocknotification_email_template translate="label" module="mk_helpcustomers">
+                    <label>Stocknotification Email Template</label>
+                    <file>stocknotification.html</file>
+                    <type>html</type>
+                </customer_helpcustomers_stocknotification_email_template>
             </email>
         </template>
+        <events>
+            <cataloginventory_stock_item_save_after>
+                <observers>
+                    <mk_helpcustomers>
+                        <type>singleton</type>
+                        <class>mk_helpcustomers/observer</class>
+                        <method>cataloginventory_stock_item_save_after</method>
+                    </mk_helpcustomers>
+                </observers>
+            </cataloginventory_stock_item_save_after>
+        </events>
     </global>
     <frontend>
+        <translate>
+            <modules>
+                <mk_helpcustomers>
+                    <files>
+                        <default>MKleine_Helpcustomers.csv</default>
+                    </files>
+                </mk_helpcustomers>
+            </modules>
+        </translate>
+        <routers>
+            <helpcustomers>
+                <use>standard</use>
+                <args>
+                    <module>MKleine_Helpcustomers</module>
+                    <frontName>helpcustomers</frontName>
+                </args>
+            </helpcustomers>
+        </routers>
+        <layout>
+            <updates>
+                <mk_helpcustomers>
+                    <file>mkleine/stocknotification.xml</file>
+                </mk_helpcustomers>
+            </updates>
+        </layout>
         <events>
             <customer_customer_authenticated>
                 <observers>
-                    <mk_helpcustomers_customer_customer_authenticated>
+                    <mk_helpcustomers>
                         <type>singleton</type>
                         <class>mk_helpcustomers/observer</class>
-                        <method>customer_customer_authenticated</method>
-                    </mk_helpcustomers_customer_customer_authenticated>
+                        <method>customer_authenticated</method>
+                    </mk_helpcustomers>
                 </observers>
             </customer_customer_authenticated>
         </events>
@@ -104,8 +148,11 @@
     <default>
         <customer>
             <helpcustomers>
-                <active>1</active>
+                <logon_fail_active>1</logon_fail_active>
                 <logon_fail_email_template>customer_helpcustomers_logon_fail_email_template</logon_fail_email_template>
+
+                <stocknotification_active>1</stocknotification_active>
+                <stocknotification_email_template>customer_helpcustomers_stocknotification_email_template</stocknotification_email_template>
             </helpcustomers>
         </customer>
     </default>

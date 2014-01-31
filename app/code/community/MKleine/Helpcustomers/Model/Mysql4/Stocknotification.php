@@ -18,15 +18,15 @@
  * @copyright   Copyright (c) 2013 Matthias Kleine (http://mkleine.de)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class MKleine_Helpcustomers_Test_Model_Faillog extends EcomDev_PHPUnit_Test_Case
+
+/**
+ * Class MKleine_Helpcustomers_Model_Mysql4_Stocknotification
+ *
+ */
+class MKleine_Helpcustomers_Model_Mysql4_Stocknotification extends Mage_Core_Model_Mysql4_Abstract
 {
-
-    public function testInsert()
-    {
-        /** @var $model MKleine_Helpcustomers_Model_Faillog */
-        $model = Mage::getModel('mk_helpcustomers/faillog');
-
-
+    public function _construct()
+    {    
+        $this->_init('mk_helpcustomers/stocknotification', 'entity_id');
     }
-
 }

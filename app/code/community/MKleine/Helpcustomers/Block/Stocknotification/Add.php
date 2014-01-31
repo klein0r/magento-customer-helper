@@ -20,14 +20,23 @@
  */
 
 /**
- * Class MKleine_Helpcustomers_Model_Mysql4_Faillog_Collection
+ * Class MKleine_Helpcustomers_Block_Stocknotification_Add
  *
+ * @method setProductId
+ * @method getProductId
  */
-class MKleine_Helpcustomers_Model_Mysql4_Faillog_Collection extends Mage_Core_Model_Mysql4_Collection_Abstract
+class MKleine_Helpcustomers_Block_Stocknotification_Add extends Mage_Core_Block_Template
 {
-    public function _construct()
+    /**
+     * @return bool|Mage_Catalog_Model_Product
+     */
+    public function getProduct()
     {
-        parent::_construct();
-        $this->_init('mk_helpcustomers/faillog');
+        if ($productId = $this->getProductId()) {
+            $product = Mage::getModel('catalog/product')->load($productId);
+            return $product->getId() ? $product : false;
+        }
+
+        return false;
     }
 }

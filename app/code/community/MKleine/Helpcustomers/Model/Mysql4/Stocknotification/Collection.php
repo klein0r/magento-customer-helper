@@ -20,14 +20,14 @@
  */
 
 /**
- * Class MKleine_Helpcustomers_Model_Mysql4_Faillog_Collection
+ * Class MKleine_Helpcustomers_Model_Mysql4_Stocknotification_Collection
  *
  */
-class MKleine_Helpcustomers_Model_Mysql4_Faillog_Collection extends Mage_Core_Model_Mysql4_Collection_Abstract
+class MKleine_Helpcustomers_Model_Mysql4_Stocknotification_Collection extends Mage_Core_Model_Mysql4_Collection_Abstract
 {
     public function _construct()
     {
         parent::_construct();
-        $this->_init('mk_helpcustomers/faillog');
+        $this->_init('mk_helpcustomers/stocknotification');
     }
 }

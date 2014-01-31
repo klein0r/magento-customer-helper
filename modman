@@ -1,6 +1,8 @@
 app/code/community/MKleine/Helpcustomers app/code/community/MKleine/Helpcustomers
+app/design/frontend/base/default/layout/mkleine/stocknotification.xml app/design/frontend/base/default/layout/mkleine/stocknotification.xml
+app/design/frontend/base/default/template/mkleine/* app/design/frontend/base/default/template/mkleine/
 app/etc/modules/MKleine_Helpcustomers.xml app/etc/modules/MKleine_Helpcustomers.xml
 app/locale/de_DE/MKleine_Helpcustomers.csv app/locale/de_DE/MKleine_Helpcustomers.csv
-app/locale/de_DE/template/email/logon_fail_template.html app/locale/de_DE/template/email/logon_fail_template.html
+app/locale/de_DE/template/email/* app/locale/de_DE/template/email/
 app/locale/en_US/MKleine_Helpcustomers.csv app/locale/en_US/MKleine_Helpcustomers.csv
-app/locale/en_US/template/email/logon_fail_template.html app/locale/en_US/template/email/logon_fail_template.html
+app/locale/en_US/template/email/* app/locale/en_US/template/email/

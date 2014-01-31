@@ -18,12 +18,17 @@
  * @copyright   Copyright (c) 2013 Matthias Kleine (http://mkleine.de)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
+
+/**
+ * Class MKleine_Helpcustomers_Model_Mailer
+ *
+ */
 class MKleine_Helpcustomers_Model_Mailer extends Mage_Core_Model_Abstract
 {
-    const XML_PATH_EXTENSION_ACTIVE = 'customer/helpcustomers/active';
+    const XML_PATH_LOGON_FAIL_ACTIVE = 'customer/helpcustomers/logon_fail_active';
     const XML_PATH_LOGON_FAIL_EMAIL_TEMPLATE = 'customer/helpcustomers/logon_fail_email_template';
 
-    public function sendMails()
+    public function sendFaillogMails()
     {
         $timeGap = Mage::getModel('core/date')->Date(null, time() - 10 * 60);
 
@@ -37,7 +42,7 @@ class MKleine_Helpcustomers_Model_Mailer extends Mage_Core_Model_Abstract
             $mailTemplateId = Mage::getStoreConfig(self::XML_PATH_LOGON_FAIL_EMAIL_TEMPLATE, $failItem->getStoreId());
 
             // Check if module is active for given store
-            if ($mailTemplateId && Mage::getStoreConfig(self::XML_PATH_EXTENSION_ACTIVE, $failItem->getStoreId())) {
+            if ($mailTemplateId && Mage::getStoreConfig(self::XML_PATH_LOGON_FAIL_ACTIVE, $failItem->getStoreId())) {
 
                 /** @var $customer MKleine_Helpcustomers_Model_Customer */
                 $customer = Mage::getModel('customer/customer')
@@ -77,6 +82,12 @@ class MKleine_Helpcustomers_Model_Mailer extends Mage_Core_Model_Abstract
 
             }
         }
+
+        return $this;
+    }
+
+    public function sendStocknotificationMails($productId, $qty)
+    {
 
         return $this;
     }
