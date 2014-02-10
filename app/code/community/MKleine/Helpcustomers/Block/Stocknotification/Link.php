@@ -26,6 +26,8 @@
 class MKleine_Helpcustomers_Block_Stocknotification_Link extends Mage_Core_Block_Template
 {
     /**
+     * Returns the current product of the registry
+     *
      * @return Mage_Catalog_Model_Product
      */
     public function getProduct()
@@ -33,21 +35,37 @@ class MKleine_Helpcustomers_Block_Stocknotification_Link extends Mage_Core_Block
         return Mage::registry('current_product');
     }
 
+    /**
+     * Checks if the customers is logged in
+     *
+     * @return bool
+     */
     public function isLoggedIn()
     {
         return Mage::getSingleton('customer/session')->isLoggedIn();
     }
 
+    /**
+     * Checks if the stock notification extension is active for the current store
+     * @return bool
+     */
     public function extensionActive()
     {
-
+        /** @var $helper MKleine_Helpcustomers_Helper_Data */
+        $helper = Mage::helper('mk_helpcustomers');
+        return ($helper->stockNotificationActive() == 1);
     }
 
+    /**
+     * Checks, if a notification for the current product is already registered
+     *
+     * @return bool
+     */
     public function notificationExists()
     {
         /** @var $notModel MKleine_Helpcustomers_Model_Stocknotification */
         $notModel = Mage::getModel('mk_helpcustomers/stocknotification');
         $notModel->prepare($this->getProduct()->getId());
-        return $notModel->getId();
+        return ($notModel->getId() > 0);
     }
 }

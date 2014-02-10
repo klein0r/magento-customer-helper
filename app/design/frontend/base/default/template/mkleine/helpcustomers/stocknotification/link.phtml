@@ -1,6 +1,6 @@
 <?php /** @var $this MKleine_Helpcustomers_Block_Stocknotification_Link */ ?>
 
-<?php if ($this->isLoggedIn() && $product = $this->getProduct()) : ?>
+<?php if ($this->extensionActive() && $this->isLoggedIn() && $product = $this->getProduct()) : ?>
     <?php if (!$product->isSaleable()) : ?>
         <?php if (!$this->notificationExists()) : ?>
             <a href="<?php echo $this->getUrl('helpcustomers/stocknotification/add', array( 'id' => $product->getId() )) ?>"><?php echo $this->__('Inform me by mail if the product is in stock again'); ?></a>

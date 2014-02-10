@@ -1,7 +1,8 @@
 Magento Help Customers Extension
 ======================
 
-[![Build Status](https://travis-ci.org/klein0r/magento-customer-helper.png?branch=develop)](https://travis-ci.org/klein0r/magento-customer-helper)
+master: [![Build Status](https://travis-ci.org/klein0r/magento-customer-helper.png?branch=master)](https://travis-ci.org/klein0r/magento-customer-helper)
+develop: [![Build Status](https://travis-ci.org/klein0r/magento-customer-helper.png?branch=develop)](https://travis-ci.org/klein0r/magento-customer-helper)
 
 Sends an email after a given time range to customers which failed to login.
 
