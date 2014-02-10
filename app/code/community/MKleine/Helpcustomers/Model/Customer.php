@@ -27,8 +27,6 @@
  */
 class MKleine_Helpcustomers_Model_Customer extends Mage_Customer_Model_Customer
 {
-    const XML_PATH_LOGON_FAIL_ACTIVE = 'customer/helpcustomers/logon_fail_active';
-
     public function validatePassword($password)
     {
         $return = parent::validatePassword($password);
@@ -40,7 +38,7 @@ class MKleine_Helpcustomers_Model_Customer extends Mage_Customer_Model_Customer
         if (!$return && $customerId) {
             $failCount = 1; // Initial value
 
-            if (Mage::getStoreConfig(self::XML_PATH_LOGON_FAIL_ACTIVE)) {
+            if (Mage::getStoreConfig(MKleine_Helpcustomers_Helper_Data::XML_PATH_LOGON_FAIL_ACTIVE)) {
                 /** @var $model MKleine_Helpcustomers_Model_Faillog */
                 $model = Mage::getModel('mk_helpcustomers/faillog');
                 $model->loadFaillogByCustomerId($customerId);

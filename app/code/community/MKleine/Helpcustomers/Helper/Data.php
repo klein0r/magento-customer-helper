@@ -20,5 +20,19 @@
  */
 class MKleine_Helpcustomers_Helper_Data extends Mage_Core_Helper_Abstract
 {
+    const XML_PATH_LOGON_FAIL_ACTIVE = 'customer/helpcustomers/logon_fail_active';
+    const XML_PATH_LOGON_FAIL_EMAIL_TEMPLATE = 'customer/helpcustomers/logon_fail_email_template';
 
+    const XML_PATH_STOCKNOTIFICATION_ACTIVE = 'customer/helpcustomers/stocknotification_active';
+    const XML_PATH_STOCKNOTIFICATION_EMAIL_TEMPLATE = 'customer/helpcustomers/stocknotification_email_template';
+
+    public function logonFailActive($store = null)
+    {
+        return Mage::getStoreConfig(self::XML_PATH_LOGON_FAIL_ACTIVE, $store);
+    }
+
+    public function stockNotificationActive($store = null)
+    {
+        return Mage::getStoreConfig(self::XML_PATH_STOCKNOTIFICATION_ACTIVE, $store);
+    }
 }

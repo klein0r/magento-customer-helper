@@ -38,6 +38,11 @@ class MKleine_Helpcustomers_Block_Stocknotification_Link extends Mage_Core_Block
         return Mage::getSingleton('customer/session')->isLoggedIn();
     }
 
+    public function extensionActive()
+    {
+
+    }
+
     public function notificationExists()
     {
         /** @var $notModel MKleine_Helpcustomers_Model_Stocknotification */

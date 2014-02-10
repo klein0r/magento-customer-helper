@@ -25,12 +25,51 @@
  */
 class MKleine_Helpcustomers_Model_Mailer extends Mage_Core_Model_Abstract
 {
-    const XML_PATH_LOGON_FAIL_ACTIVE = 'customer/helpcustomers/logon_fail_active';
-    const XML_PATH_LOGON_FAIL_EMAIL_TEMPLATE = 'customer/helpcustomers/logon_fail_email_template';
+    const LOGON_FAIL_TIME_GAP = 600;
 
+    /**
+     * @param $store int StoreId
+     * @param $template int TemplateId
+     * @param $email string Receiver Mail address
+     * @param $name string Name of receiver
+     * @param array $templateVars list of template vars
+     * @return Mage_Core_Model_Email_Template_Mailer
+     */
+    protected function sendMail($store, $template, $email, $name, $templateVars = array())
+    {
+        /** @var $mailer Mage_Core_Model_Email_Template_Mailer */
+        $mailer = Mage::getModel('core/email_template_mailer');
+        $emailInfo = Mage::getModel('core/email_info');
+
+        $emailInfo->addTo($email, $name);
+        $mailer->addEmailInfo($emailInfo);
+
+        // Set all required params and send emails
+        $mailer->setSender(Mage::getStoreConfig(Mage_Admin_Model_User::XML_PATH_FORGOT_EMAIL_IDENTITY, $store));
+        $mailer->setStoreId($store);
+        $mailer->setTemplateId($template);
+
+        // Set all template vars
+        $mailer->setTemplateParams($templateVars);
+
+        // Send the mail
+        $mailer->send();
+
+        return $mailer;
+    }
+
+    /**
+     * Sends all fail log entries for the last x Minutes to all customers
+     * which failed to logon
+     *
+     * @return $this
+     */
     public function sendFaillogMails()
     {
-        $timeGap = Mage::getModel('core/date')->Date(null, time() - 10 * 60);
+        /** @var $helper MKleine_Helpcustomers_Helper_Data */
+        $helper = Mage::helper('mk_helpcustomers');
+
+        $timeGap = Mage::getModel('core/date')->Date(null, time() - self::LOGON_FAIL_TIME_GAP);
 
         /** @var $collection MKleine_Helpcustomers_Model_Mysql4_Faillog_Collection */
         $collection = Mage::getModel('mk_helpcustomers/faillog')->getCollection();
@@ -39,10 +78,10 @@ class MKleine_Helpcustomers_Model_Mailer extends Mage_Core_Model_Abstract
 
         /** @var $failItem MKleine_Helpcustomers_Model_Faillog */
         foreach ($collection as $failItem) {
-            $mailTemplateId = Mage::getStoreConfig(self::XML_PATH_LOGON_FAIL_EMAIL_TEMPLATE, $failItem->getStoreId());
+            $mailTemplateId = Mage::getStoreConfig(MKleine_Helpcustomers_Helper_Data::XML_PATH_LOGON_FAIL_EMAIL_TEMPLATE, $failItem->getStoreId());
 
             // Check if module is active for given store
-            if ($mailTemplateId && Mage::getStoreConfig(self::XML_PATH_LOGON_FAIL_ACTIVE, $failItem->getStoreId())) {
+            if ($mailTemplateId && $helper->logonFailActive($failItem->getStoreId())) {
 
                 /** @var $customer MKleine_Helpcustomers_Model_Customer */
                 $customer = Mage::getModel('customer/customer')
@@ -50,33 +89,17 @@ class MKleine_Helpcustomers_Model_Mailer extends Mage_Core_Model_Abstract
                     ->load($failItem->getCustomerId());
 
                 if ($customer->getId()) {
-                    /** @var $mailer Mage_Core_Model_Email_Template_Mailer */
-                    $mailer = Mage::getModel('core/email_template_mailer');
-                    $emailInfo = Mage::getModel('core/email_info');
 
-                    $emailInfo->addTo($customer->getEmail(), $customer->getName());
-
-                    $mailer->addEmailInfo($emailInfo);
-
-                    // Set all required params and send emails
-                    $mailer->setSender(Mage::getStoreConfig(Mage_Admin_Model_User::XML_PATH_FORGOT_EMAIL_IDENTITY, $failItem->getStoreId()));
-                    $mailer->setStoreId($failItem->getStoreId());
-                    $mailer->setTemplateId($mailTemplateId);
-
-                    $mailer->setTemplateParams(array(
+                    $this->sendMail($failItem->getStoreId(), $mailTemplateId, $customer->getEmail(), $customer->getName(), array(
                         'customer' => $customer,
                         'failcount' => $failItem->getFailCount()
                     ));
 
-                    // Send the mail
-                    $mailer->send();
-
                     $failItem->delete();
 
-                    Mage::dispatchEvent('mk_helpcustomers_fail_login_mail_sent', array(
+                    Mage::dispatchEvent('mk_helpcustomers_logon_fail_mail_sent', array(
                         'customer' => $customer,
-                        'fail_count' => $failItem->getFailCount(),
-                        'mailer' => $mailer
+                        'fail_count' => $failItem->getFailCount()
                     ));
                 }
 
@@ -86,8 +109,56 @@ class MKleine_Helpcustomers_Model_Mailer extends Mage_Core_Model_Abstract
         return $this;
     }
 
+    /**
+     * Sends notification message about product status to registered
+     * customers
+     *
+     * @param $productId
+     * @param $qty
+     * @return $this
+     */
     public function sendStocknotificationMails($productId, $qty)
     {
+        /** @var $helper MKleine_Helpcustomers_Helper_Data */
+        $helper = Mage::helper('mk_helpcustomers');
+
+        /** @var $product Mage_Catalog_Model_Product */
+        $product = Mage::getModel('catalog/product')->load($productId);
+
+        /** @var $collection MKleine_Helpcustomers_Model_Mysql4_Stocknotification_Collection */
+        $collection = Mage::getModel('mk_helpcustomers/stocknotification')
+            ->getCollection()
+            ->addFieldToFilter('product_id', $productId);
+
+        /** @var $notification MKleine_Helpcustomers_Model_Stocknotification */
+        foreach ($collection as $notification) {
+            $mailTemplateId = Mage::getStoreConfig(MKleine_Helpcustomers_Helper_Data::XML_PATH_STOCKNOTIFICATION_ACTIVE, $notification->getStoreId());
+
+            // Check if module is active for given store
+            if ($mailTemplateId && $helper->stockNotificationActive($notification->getStoreId())) {
+
+                /** @var $customer MKleine_Helpcustomers_Model_Customer */
+                $customer = Mage::getModel('customer/customer')
+                    ->setWebsiteId(Mage::app()->getStore($notification->getStoreId())->getWebsiteId())
+                    ->load($notification->getCustomerId());
+
+                if ($customer->getId()) {
+
+                    $this->sendMail($notification->getStoreId(), $mailTemplateId, $customer->getEmail(), $customer->getName(), array(
+                        'customer' => $customer,
+                        'product' => $product
+                    ));
+
+                    $notification->delete();
+
+                    Mage::dispatchEvent('mk_helpcustomers_stocknotification_mail_sent', array(
+                        'customer' => $customer,
+                        'product' => $product
+                    ));
+                }
+
+            }
+        }
 
         return $this;
     }
