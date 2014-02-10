@@ -19,8 +19,7 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "magento-hackathon/magento-composer-installer": "dev-master",
-        "n98/magerun": "dev-master"
+        "magento-hackathon/magento-composer-installer": "dev-master"
     },
     "require-dev": {
         "ecomdev/mage-ci": "dev-master"
