@@ -1,5 +1,4 @@
 <?php
-
 /**
  * MKleine - (c) Matthias Kleine
  *
@@ -19,9 +18,10 @@
  * @copyright   Copyright (c) 2013 Matthias Kleine (http://mkleine.de)
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
+
 class MKleine_Helpcustomers_Test_FeatureContext extends \Behat\MinkExtension\Context\RawMinkContext
 {
-    const EXCEPTION_NO_TABLE_ROW_FOUND = 1000;
+    const EXCEPTION_WRONG_NUMBER_OF_TABLE_ROWS = 1000;
     const EXCEPTION_CUSTOMER_NOT_CREATED = 1001;
 
     const CUSTOMER_DEFAULT_STORE_ID = 1;
@@ -47,7 +47,7 @@ class MKleine_Helpcustomers_Test_FeatureContext extends \Behat\MinkExtension\Con
             );
 
             // Set a random password for new customers
-            $customer->setPassword(md5(rand() . time()));
+            $customer->setPassword('validpassword');
             $customer->setStore(Mage::app()->getStore(self::CUSTOMER_DEFAULT_STORE_ID));
 
             $customer->addData($customerData);
@@ -93,17 +93,17 @@ class MKleine_Helpcustomers_Test_FeatureContext extends \Behat\MinkExtension\Con
     }
 
     /**
-     * @Then /^an entry must exist in table "([^"]*)"$/
+     * @Then /^the table "([^"]*)" must contain "([^"]*)" rows$/
      */
-    public function anEntryMustExistInTable($table)
+    public function theTableMustContainRows($table, $rows)
     {
         $read = Mage::getSingleton('core/resource')->getConnection('core_read');
         $tableName = $read->getTableName($table);
 
         $result = $read->fetchAll("SELECT COUNT(*) as nmbrRows FROM `{$tableName}`");
-        if ($result[0]['nmbrRows'] == 0) {
-            throw Mage::exception('MKleine_Helpcustomers', Mage::helper('mk_helpcustomers')->__('No rows in table'),
-                self::EXCEPTION_NO_TABLE_ROW_FOUND);
+        if ($result[0]['nmbrRows'] != (int)$rows) {
+            throw Mage::exception('MKleine_Helpcustomers', Mage::helper('mk_helpcustomers')->__('%d rows in table', $result[0]['nmbrRows']),
+                self::EXCEPTION_WRONG_NUMBER_OF_TABLE_ROWS);
         }
     }
 }

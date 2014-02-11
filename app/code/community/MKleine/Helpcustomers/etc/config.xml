@@ -73,6 +73,15 @@
             </email>
         </template>
         <events>
+            <customer_customer_authenticated>
+                <observers>
+                    <mk_helpcustomers>
+                        <type>singleton</type>
+                        <class>mk_helpcustomers/observer</class>
+                        <method>customer_authenticated</method>
+                    </mk_helpcustomers>
+                </observers>
+            </customer_customer_authenticated>
             <cataloginventory_stock_item_save_after>
                 <observers>
                     <mk_helpcustomers>
@@ -110,17 +119,6 @@
                 </mk_helpcustomers>
             </updates>
         </layout>
-        <events>
-            <customer_customer_authenticated>
-                <observers>
-                    <mk_helpcustomers>
-                        <type>singleton</type>
-                        <class>mk_helpcustomers/observer</class>
-                        <method>customer_authenticated</method>
-                    </mk_helpcustomers>
-                </observers>
-            </customer_customer_authenticated>
-        </events>
     </frontend>
     <adminhtml>
         <translate>
