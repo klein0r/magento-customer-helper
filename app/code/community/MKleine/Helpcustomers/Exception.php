@@ -19,15 +19,7 @@
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-class MKleine_Helpcustomers_Test_Model_Mailer extends EcomDev_PHPUnit_Test_Case
+class MKleine_Helpcustomers_Exception extends Mage_Core_Exception
 {
-    /**
-     * Just a non sense test case to test travis ci
-     *
-     * @test
-     */
-    public function sendSomeTestMails()
-    {
-        $this->assertEquals(1, 1);
-    }
+
 }
