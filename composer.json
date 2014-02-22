@@ -23,12 +23,17 @@
         "magento-hackathon/magento-behat-extension": "dev-master"
     },
     "require-dev": {
+        "ivanchepurnyi/ecomdev_phpunit": "dev-dev",
         "ecomdev/mage-ci": "dev-master"
     },
     "config": {
         "bin-dir": "bin"
     },
     "repositories":[
+        {
+            "url": "https://github.com/EcomDev/EcomDev_PHPUnit",
+            "type": "git"
+        },
         {
             "type": "composer",
             "url": "http://packages.firegento.com"
