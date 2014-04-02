@@ -17,6 +17,7 @@ class MKleine_Helpcustomers_StocknotificationController extends Mage_Core_Contro
             /** @var $notModel MKleine_Helpcustomers_Model_Stocknotification */
             $notModel = Mage::getModel('mk_helpcustomers/stocknotification');
             $notModel->prepare($productId);
+            $notModel->setCreatedAt(Mage::getModel('core/date')->timestamp());
             $notModel->save();
         }
         else {
@@ -57,6 +58,12 @@ class MKleine_Helpcustomers_StocknotificationController extends Mage_Core_Contro
         $this->getLayout()->getBlock('mkleine.helpcustomers.stocknotification.remove')
             ->setProductId($productId);
 
+        $this->renderLayout();
+    }
+
+    public function manageAction()
+    {
+        $this->loadLayout();
         $this->renderLayout();
     }
 }

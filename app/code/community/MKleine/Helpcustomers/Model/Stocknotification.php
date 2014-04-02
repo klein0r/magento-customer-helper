@@ -28,9 +28,13 @@
  * @method setStoreId
  * @method getCustomerId
  * @method setCustomerId
+ * @method getCreatedAt
+ * @method setCreatedAt
  */
 class MKleine_Helpcustomers_Model_Stocknotification extends Mage_Core_Model_Abstract
 {
+    protected $_product = null;
+
     public function _construct()
     {
         parent::_construct();
@@ -58,5 +62,31 @@ class MKleine_Helpcustomers_Model_Stocknotification extends Mage_Core_Model_Abst
         else {
             $this->load($collection->getFirstItem()->getId());
         }
+    }
+
+    /**
+     * @return Mage_Catalog_Model_Product|null
+     */
+    public function getProduct()
+    {
+        if (is_null($this->_product)) {
+            $product = Mage::getModel('catalog/product')
+                ->load($this->getProductId());
+
+            if ($product->getId()) {
+                $this->_product = $product;
+            }
+        }
+
+        return $this->_product;
+    }
+
+    public function getProductUrl()
+    {
+        if ($product = $this->getProduct()) {
+            return $product->getProductUrl();
+        }
+
+        return false;
     }
 }

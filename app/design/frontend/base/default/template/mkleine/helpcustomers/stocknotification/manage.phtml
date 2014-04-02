@@ -1,0 +1,41 @@
+<?php /** @var $this MKleine_Helpcustomers_Block_Stocknotification_Manage */ ?>
+
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<?php $_notifications = $this->getNotifications(); ?>
+<div class="page-title">
+    <h1><?php echo $this->__('My stock notifications') ?></h1>
+</div>
+<?php echo $this->getPagerHtml(); ?>
+<?php if($_notifications->getSize()): ?>
+    <table class="data-table" id="my-stocknotifications-table">
+        <col width="1" />
+        <col />
+        <col />
+        <thead>
+        <tr>
+            <th><?php echo $this->__('Date') ?></th>
+            <th><?php echo $this->__('Item') ?></th>
+            <th>&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php $_odd = ''; ?>
+        <?php /** @var $_notification MKleine_Helpcustomers_Model_Stocknotification */
+        foreach ($_notifications as $_notification): ?>
+            <tr>
+                <td><span class="nobr"><?php echo $this->formatDate($_notification->getCreatedAt()) ?></span></td>
+                <td><?php echo $_notification->getProduct() ? $this->escapeHtml($_notification->getProduct()->getName()) : '&nbsp;' ?></td>
+                <td class="a-center">
+                    <span class="nobr"><a href="<?php echo $_notification->getProductUrl() ?>"><?php echo $this->__('View Product') ?></a>
+                        <span class="separator">|</span> <a href="<?php echo $this->getRemoveUrl($_notification) ?>" class="link-remove"><?php echo $this->__('Remove notification') ?></a>
+                    </span>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+    <script type="text/javascript">decorateTable('my-stocknotifications-table');</script>
+    <?php echo $this->getPagerHtml(); ?>
+<?php else: ?>
+    <p><?php echo $this->__('You have not registered any stock notifications.'); ?></p>
+<?php endif ?>

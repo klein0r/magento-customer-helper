@@ -23,4 +23,19 @@
                    template="mkleine/helpcustomers/stocknotification/remove.phtml"/>
         </reference>
     </helpcustomers_stocknotification_remove>
+
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <action method="addLink" translate="label" module="mk_helpcustomers"><name>stocknotification</name><path>helpcustomers/stocknotification/manage</path><label>Stock Notifications</label></action>
+        </reference>
+    </customer_account>
+
+    <helpcustomers_stocknotification_manage translate="label">
+        <label>Stock Notifications</label>
+        <update handle="customer_account"/>
+        <reference name="my.account.wrapper">
+            <block type="mk_helpcustomers/stocknotification_manage" name="customer_stocknotifications" />
+            <block type="customer/account_dashboard" name="customer.account.link.back" template="customer/account/link/back.phtml"/>
+        </reference>
+    </helpcustomers_stocknotification_manage>
 </layout>
