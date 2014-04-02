@@ -2,10 +2,20 @@
 
 <?php if ($this->extensionActive() && $this->isLoggedIn() && $product = $this->getProduct()) : ?>
     <?php if (!$product->isSaleable()) : ?>
+        <div class="stocknotification">
         <?php if (!$this->notificationExists()) : ?>
-            <a href="<?php echo $this->getUrl('helpcustomers/stocknotification/add', array( 'id' => $product->getId() )) ?>"><?php echo $this->__('Inform me by mail if the product is in stock again'); ?></a>
+            <button type="button" title="<?php echo $this->__('Inform me by mail if the product is in stock again'); ?>" class="button btn-notification" onclick="location.href='<?php echo $this->getUrl('helpcustomers/stocknotification/add', array( 'id' => $product->getId() )) ?>'">
+                <span>
+                    <span><?php echo $this->__('Inform me by mail if the product is in stock again'); ?></span>
+                </span>
+            </button>
         <?php else : ?>
-            <a href="<?php echo $this->getUrl('helpcustomers/stocknotification/remove', array( 'id' => $product->getId() )) ?>"><?php echo $this->__('Remove mail subscription about stock changes'); ?></a>
+            <button type="button" title="<?php echo $this->__('Remove mail subscription about stock changes'); ?>" class="button btn-notification" onclick="location.href='<?php echo $this->getUrl('helpcustomers/stocknotification/remove', array( 'id' => $product->getId() )) ?>'">
+                <span>
+                    <span><?php echo $this->__('Remove mail subscription about stock changes'); ?></span>
+                </span>
+            </button>
         <?php endif; ?>
+        </div>
     <?php endif; ?>
 <?php endif; ?>

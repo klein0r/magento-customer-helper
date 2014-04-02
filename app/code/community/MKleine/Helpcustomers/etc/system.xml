@@ -35,7 +35,7 @@
                             <label>Stocknotification active</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
-                            <comment>Will allow customers to</comment>
+                            <comment>Allows customers to register for products which are not in stock</comment>
                             <sort_order>30</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>

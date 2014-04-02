@@ -53,11 +53,17 @@ class MKleine_Helpcustomers_Model_Observer extends Mage_Core_Model_Abstract
     {
         /** @var $item Mage_CatalogInventory_Model_Stock_Item */
         $item = $observer->getItem();
+
+        /** @var $product Mage_Catalog_Model_Product */
         $product = $item->getProduct();
+
+        if (!$product) {
+            $product = Mage::getModel('catalog/product')->load($item->getProductId());
+        }
 
         if ($item->getQty() > 0 && $product->getId() && $item->getIsInStock()) {
             /** @var $mailer MKleine_Helpcustomers_Model_Mailer */
-            $mailer = Mage::getModel('mkleine_helpcustomers/mailer');
+            $mailer = Mage::getModel('mk_helpcustomers/mailer');
             $mailer->sendStocknotificationMails($product->getId(), $item->getQty());
         }
     }

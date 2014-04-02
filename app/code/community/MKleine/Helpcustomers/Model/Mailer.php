@@ -132,7 +132,7 @@ class MKleine_Helpcustomers_Model_Mailer extends Mage_Core_Model_Abstract
 
         /** @var $notification MKleine_Helpcustomers_Model_Stocknotification */
         foreach ($collection as $notification) {
-            $mailTemplateId = Mage::getStoreConfig(MKleine_Helpcustomers_Helper_Data::XML_PATH_STOCKNOTIFICATION_ACTIVE, $notification->getStoreId());
+            $mailTemplateId = Mage::getStoreConfig(MKleine_Helpcustomers_Helper_Data::XML_PATH_STOCKNOTIFICATION_EMAIL_TEMPLATE, $notification->getStoreId());
 
             // Check if module is active for given store
             if ($mailTemplateId && $helper->stockNotificationActive($notification->getStoreId())) {
@@ -146,7 +146,8 @@ class MKleine_Helpcustomers_Model_Mailer extends Mage_Core_Model_Abstract
 
                     $this->sendMail($notification->getStoreId(), $mailTemplateId, $customer->getEmail(), $customer->getName(), array(
                         'customer' => $customer,
-                        'product' => $product
+                        'product' => $product,
+                        'qty' => $qty
                     ));
 
                     $notification->delete();
