@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package>
+    <name>customerhelper</name>
+    <version>1.0.0</version>
+    <stability>stable</stability>
+    <license uri="http://opensource.org/licenses/osl-3.0.php">OSL</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>This extension will help customers to logon when they lost their login information and informs them by mail.</summary>
+    <description>Sends an email after a given time range to customers which failed to login.&#xD;
+&#xD;
+1. A customer tries to logon several times with a wrong password&#xD;
+2. Failed tries will be logged into the database&#xD;
+3. If the logon is successful, the fail entry will be deleted from the database&#xD;
+4. A cron job checks for customers which failed to login every 10 minutes&#xD;
+5. All customers are informed by mail that they failed to logon&#xD;
+6. The customer uses a link in the mail to reset their password&#xD;
+&#xD;
+This extension should stop frustration of customers if they fail to logon because of forgotten passwords.</description>
+    <notes>First stable release</notes>
+    <authors><author><name>Matthias Kleine</name><user>mkleine</user><email>development@mkleine.de</email></author></authors>
+    <date>2014-01-11</date>
+    <time>01:25:36</time>
+    <contents><target name="magecommunity"><dir name="MKleine"><dir name="Helpcustomers"><dir name="Helper"><file name="Data.php" hash="b9b950d26676382176364ec91129747b"/></dir><dir name="Model"><file name="Customer.php" hash="4582030892803a13af78211c1f594692"/><file name="Faillog.php" hash="19d6eda8f1f88c2f2acee008099b526b"/><file name="Mailer.php" hash="46d26fcd482b26ab64a465a18316bb11"/><dir name="Mysql4"><dir name="Faillog"><file name="Collection.php" hash="4d008019db95b945b9e22c53ee8835d9"/></dir><file name="Faillog.php" hash="65194debd0445bb9a30ccf4cf4f88bbc"/></dir><file name="Observer.php" hash="c3a80d77e7cc651ffee1488251bae218"/></dir><dir name="Test"><dir name="Model"><file name="Faillog.php" hash="021d9c77043e6e5320b5317429356fe3"/><file name="Mailer.php" hash="0829e26973c15ad93e3909def48d9825"/></dir></dir><dir name="etc"><file name="config.xml" hash="dfb210ab406151c4ff65d2c01265dc95"/><file name="system.xml" hash="64f0faf71d9ac42cfb078742520ce516"/></dir><dir name="sql"><dir name="helpcustomers_setup"><file name="mysql4-install-0.0.1.php" hash="965ebee8c1e50b83d482a0347b06ebd0"/></dir></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="MKleine_Helpcustomers.xml" hash="59b384b4def33c4348cec12bed9b2ecf"/></dir></target><target name="magelocale"><dir><dir name="de_DE"><file name="MKleine_Helpcustomers.csv" hash="d41d8cd98f00b204e9800998ecf8427e"/><dir name="template"><dir name="email"><file name="logon_fail_template.html" hash="628a319fae86af906b7ee4e175f2729c"/></dir></dir></dir><dir name="en_US"><file name="MKleine_Helpcustomers.csv" hash="5af9f9b0bb3be1e8e448108c54db6939"/><dir name="template"><dir name="email"><file name="logon_fail_template.html" hash="6d3ef348bcbb3063def909cc60b88d71"/></dir></dir></dir></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.2.0</min><max>5.5.0</max></php></required></dependencies>
+</package>

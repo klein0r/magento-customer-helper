@@ -1,0 +1,104 @@
+<_>
+   <form_key>uFGx0d83XC8rOFa6</form_key>
+   <name>customerhelper</name>
+   <channel>community</channel>
+   <version_ids>
+      <version_ids>2</version_ids>
+   </version_ids>
+   <summary>This extension will help customers to logon when they lost their login information and informs them by mail.</summary>
+   <description>Sends an email after a given time range to customers which failed to login.
+
+1. A customer tries to logon several times with a wrong password
+2. Failed tries will be logged into the database
+3. If the logon is successful, the fail entry will be deleted from the database
+4. A cron job checks for customers which failed to login every 10 minutes
+5. All customers are informed by mail that they failed to logon
+6. The customer uses a link in the mail to reset their password
+
+This extension should stop frustration of customers if they fail to logon because of forgotten passwords.</description>
+   <license>OSL</license>
+   <license_uri>http://opensource.org/licenses/osl-3.0.php</license_uri>
+   <version>1.0.0</version>
+   <stability>stable</stability>
+   <notes>First stable release</notes>
+   <authors>
+      <name>
+         <name>Matthias Kleine</name>
+      </name>
+      <user>
+         <user>mkleine</user>
+      </user>
+      <email>
+         <email>development@mkleine.de</email>
+      </email>
+   </authors>
+   <depends_php_min>5.2.0</depends_php_min>
+   <depends_php_max>5.5.0</depends_php_max>
+   <depends>
+      <package>
+         <name>
+            <name/>
+         </name>
+         <channel>
+            <channel/>
+         </channel>
+         <min>
+            <min/>
+         </min>
+         <max>
+            <max/>
+         </max>
+         <files>
+            <files>                   </files>
+         </files>
+      </package>
+      <extension>
+         <name>
+            <name>Core</name>
+         </name>
+         <min>
+            <min/>
+         </min>
+         <max>
+            <max/>
+         </max>
+      </extension>
+   </depends>
+   <contents>
+      <target>
+         <target>magelocal</target>
+         <target>magecommunity</target>
+         <target>mageetc</target>
+         <target>magelocale</target>
+         <target>magelocale</target>
+      </target>
+      <path>
+         <path/>
+         <path>MKleine/Helpcustomers</path>
+         <path>modules/MKleine_Helpcustomers.xml</path>
+         <path/>
+         <path/>
+      </path>
+      <type>
+         <type>file</type>
+         <type>dir</type>
+         <type>file</type>
+         <type>dir</type>
+         <type>dir</type>
+      </type>
+      <include>
+         <include/>
+         <include/>
+         <include/>
+         <include>#MKleine_Helpcustomers.csv#</include>
+         <include>#logon_fail_template.html#</include>
+      </include>
+      <ignore>
+         <ignore/>
+         <ignore/>
+         <ignore/>
+         <ignore/>
+         <ignore/>
+      </ignore>
+   </contents>
+</_>
